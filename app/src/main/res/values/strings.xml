@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name" translatable="false">My Application</string>
+    <string name="contrains">Constrain</string>
+    <string name="newkeys">Haha</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
