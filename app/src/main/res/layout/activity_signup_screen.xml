@@ -88,7 +88,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/username"
+                    android:id="@+id/signup_username"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="#CECACA"
@@ -100,7 +100,7 @@
                     android:textColorHint="#EBDFDF" />
 
                 <EditText
-                    android:id="@+id/email"
+                    android:id="@+id/signup_email"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:backgroundTint="#CECACA"
@@ -112,7 +112,7 @@
                     android:textColorHint="#EBDFDF" />
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/signup_password"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_weight="1"
@@ -125,7 +125,7 @@
                     android:textColorHint="#EBDFDF" />
 
                 <EditText
-                    android:id="@+id/repassword"
+                    android:id="@+id/signup_repassword"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_weight="1"
@@ -146,7 +146,7 @@
                 android:paddingTop="20dp">
 
                 <Button
-                    android:id="@+id/login_button"
+                    android:id="@+id/signup_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
