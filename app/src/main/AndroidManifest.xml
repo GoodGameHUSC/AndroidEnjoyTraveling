@@ -3,18 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="Enjoy Traveling"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:name=".MyApplication">
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name=".activities.AppLauncherScreen"
@@ -26,18 +25,17 @@
             </intent-filter>
         </activity>
 
-
+        <activity
+            android:name=".activities.DestinationDetail"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.LoginScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:launchMode="singleInstance"
-            />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.SignupScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:launchMode="singleInstance"
-            />
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.HomeScreen"
             android:label="@string/title_activity_home_screen"

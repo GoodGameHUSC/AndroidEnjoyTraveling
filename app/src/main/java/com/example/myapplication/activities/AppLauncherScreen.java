@@ -11,6 +11,8 @@ import com.example.myapplication.R;
 
 public class AppLauncherScreen extends AppCompatActivity {
 
+    final AppLauncherScreen instance = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,27 +24,24 @@ public class AppLauncherScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        this.initialize();
+        this.initApp();
+//        this.initialize();
     }
 
-    // Test
+    private void initApp() {
+        Intent startHome = new Intent(instance, HomeScreen.class);
+        startActivity(startHome);
+    }
 
     private void initialize() {
 
         final SharedPreferences loginState = getSharedPreferences("AUTH_STATE", MODE_PRIVATE);
 
-//        SharedPreferences.Editor editor = loginState.edit();
-//
-//        editor.putString("username", "pham hung");
-//        editor.putBoolean("isLogin", true);
-//
-//        editor.commit();
 
-        final AppLauncherScreen instance = this;
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        Log.v("login", String.valueOf(loginState.getBoolean("isLogin", false)));
+                        Log.v("is logged in", String.valueOf(loginState.getBoolean("isLogin", false)));
 
                         if (!loginState.getBoolean("isLogin", false)) {
                             Intent startLogin = new Intent(instance, LoginScreen.class);
@@ -55,7 +54,7 @@ public class AppLauncherScreen extends AppCompatActivity {
                 },
                 1000);
 
-
     }
+
 
 }

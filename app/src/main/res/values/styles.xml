@@ -13,4 +13,11 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="tabActive"  parent="AppTheme">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="textMainColor">
+        <item name="android:color">#706464</item>
+    </style>
+
 </resources>
