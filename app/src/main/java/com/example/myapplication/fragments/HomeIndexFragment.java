@@ -99,10 +99,11 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
             public void onClick(View v) {
                 String searchString = text_search.getText().toString();
 
-                if (searchString.isEmpty()) {
-                    Toast.makeText(context, "Please enter search keyword", Toast.LENGTH_SHORT).show();
-                    return;
-                } else search(searchString);
+//                if (searchString.isEmpty()) {
+//                    Toast.makeText(context, "Please enter search keyword", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else 
+                    search(searchString);
             }
         });
 
