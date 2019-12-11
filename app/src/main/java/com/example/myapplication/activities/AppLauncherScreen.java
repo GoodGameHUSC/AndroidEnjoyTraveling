@@ -31,6 +31,7 @@ public class AppLauncherScreen extends AppCompatActivity {
     private void initApp() {
         Intent startHome = new Intent(instance, HomeScreen.class);
         startActivity(startHome);
+
     }
 
     private void initialize() {

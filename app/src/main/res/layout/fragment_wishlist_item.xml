@@ -26,7 +26,7 @@
             android:background="#FCFBFB">
 
             <ImageView
-                android:id="@+id/item_des_img"
+                android:id="@+id/wish_des_img"
                 android:layout_width="413dp"
                 android:layout_height="213dp"
                 android:background="#FCFCFC"
@@ -36,25 +36,26 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/item_des_brief"
+                android:id="@+id/wish_des_brief"
                 android:layout_width="0dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
                 android:text="brief"
                 android:textColor="@color/textMainColor"
                 android:textSize="14sp"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/item_des_btn_location"
-                card_view:layout_constraintTop_toBottomOf="@+id/item_des_title" />
+                card_view:layout_constraintHorizontal_bias="0.0"
+                card_view:layout_constraintStart_toEndOf="@+id/wish_des_btn_location"
+                card_view:layout_constraintTop_toBottomOf="@+id/wish_des_title" />
 
             <TextView
-                android:id="@+id/item_des_title"
+                android:id="@+id/wish_des_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/app_name"
                 android:textColor="@color/textMainColor"
@@ -63,10 +64,10 @@
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.0"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/item_des_img" />
+                card_view:layout_constraintTop_toBottomOf="@+id/wish_des_img" />
 
             <ImageButton
-                android:id="@+id/item_des_btn_location"
+                android:id="@+id/wish_des_btn_location"
                 android:layout_width="29dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="16dp"
@@ -78,7 +79,7 @@
                 card_view:srcCompat="@mipmap/ic_action_golf_course" />
 
             <ImageButton
-                android:id="@+id/item_des_btn_location2"
+                android:id="@+id/wish_des_btn_location2"
                 android:layout_width="29dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="16dp"
@@ -90,7 +91,7 @@
                 card_view:srcCompat="@drawable/ic_action_location_on" />
 
             <ImageButton
-                android:id="@+id/item_des_lbtn_like"
+                android:id="@+id/wish_des_lbtn_like"
                 android:layout_width="29dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="16dp"
@@ -98,11 +99,11 @@
                 android:background="@drawable/background_transparent"
                 android:tint="#FFEB3B"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/item_des_btn_location2"
+                card_view:layout_constraintTop_toBottomOf="@+id/wish_des_btn_location2"
                 card_view:srcCompat="@drawable/ic_action_star" />
 
             <ImageButton
-                android:id="@+id/item_des_lbtn_like2"
+                android:id="@+id/wish_des_lbtn_like2"
                 android:layout_width="29dp"
                 android:layout_height="28dp"
                 android:layout_marginEnd="40dp"
@@ -115,21 +116,19 @@
                 card_view:srcCompat="@mipmap/ic_action_thumb_up" />
 
             <ImageButton
-                android:id="@+id/item_des_bookmark"
+                android:id="@+id/wish_remove"
                 android:layout_width="32dp"
                 android:layout_height="37dp"
-                android:layout_marginTop="11dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="144dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="124dp"
                 android:background="@drawable/background_transparent"
                 android:scaleType="fitCenter"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/item_des_img"
-                card_view:srcCompat="@drawable/ic_action_bookmark_border" />
+                card_view:srcCompat="@drawable/ic_action_restore_from_trash" />
 
             <TextView
-                android:id="@+id/item_des_addess"
+                android:id="@+id/wish_des_addess"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="8dp"
@@ -141,10 +140,10 @@
                 android:textColor="@color/textMainColor"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/item_des_btn_location2" />
+                card_view:layout_constraintStart_toEndOf="@+id/wish_des_btn_location" />
 
             <TextView
-                android:id="@+id/des_item_like"
+                android:id="@+id/wish_item_like"
                 android:layout_width="31dp"
                 android:layout_height="28dp"
                 android:layout_marginEnd="16dp"
@@ -159,7 +158,7 @@
                 card_view:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/des_item_rate"
+                android:id="@+id/wish_item_rate"
                 android:layout_width="31dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="8dp"
@@ -171,8 +170,8 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/item_des_lbtn_like"
-                card_view:layout_constraintTop_toTopOf="@+id/item_des_lbtn_like"
+                card_view:layout_constraintStart_toEndOf="@+id/wish_des_lbtn_like"
+                card_view:layout_constraintTop_toTopOf="@+id/wish_des_lbtn_like"
                 card_view:layout_constraintVertical_bias="1.0" />
 
         </android.support.constraint.ConstraintLayout>

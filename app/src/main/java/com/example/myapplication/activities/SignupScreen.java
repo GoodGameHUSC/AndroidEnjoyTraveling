@@ -98,7 +98,10 @@ public class SignupScreen extends AppCompatActivity implements SignUpContract.Vi
 
     @Override
     public void signupSuccess() {
-        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
+        Intent intentHome= new Intent(this, HomeScreen.class);
+        startActivity(intentHome);
     }
 
     @Override

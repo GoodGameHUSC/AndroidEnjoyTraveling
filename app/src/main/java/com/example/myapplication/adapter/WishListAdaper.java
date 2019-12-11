@@ -1,10 +1,11 @@
 package com.example.myapplication.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.DestinationDetail;
-import com.example.myapplication.activities.LoginScreen;
 import com.example.myapplication.models.Destination;
-import com.example.myapplication.services.DestinationService;
 import com.example.myapplication.services.WishListService;
 import com.example.myapplication.shared.RetrofitHelper;
 import com.example.myapplication.shared.SharedLocalData;
@@ -27,8 +26,6 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,13 +33,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.MyViewHolder> {
+public class WishListAdaper extends RecyclerView.Adapter<WishListAdaper.MyViewHolder> {
 
     private List<Destination> mDataSet;
     private LayoutInflater mLayoutInflater;
     private Context mContext;
 
-    public DestinationAdapter(Context context, List<Destination> destinationList) {
+    public WishListAdaper(Context context, List<Destination> destinationList) {
         this.mDataSet = destinationList;
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
@@ -52,17 +49,17 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
 
         public TextView title, brief, address, rate_avg, total_like;
         ImageView mainImage;
-        ImageButton bookmark;
+        ImageButton removebtn;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.item_des_title);
-            brief = itemView.findViewById(R.id.item_des_brief);
-            address = itemView.findViewById(R.id.item_des_addess);
-            rate_avg = itemView.findViewById(R.id.des_item_rate);
-            total_like = itemView.findViewById(R.id.des_item_like);
-            mainImage = itemView.findViewById(R.id.item_des_img);
-            bookmark = itemView.findViewById(R.id.item_des_bookmark);
+            title = itemView.findViewById(R.id.wish_des_title);
+            brief = itemView.findViewById(R.id.wish_des_brief);
+            address = itemView.findViewById(R.id.wish_des_addess);
+            rate_avg = itemView.findViewById(R.id.wish_item_rate);
+            total_like = itemView.findViewById(R.id.wish_item_like);
+            mainImage = itemView.findViewById(R.id.wish_des_img);
+            removebtn = itemView.findViewById(R.id.wish_remove);
 
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,10 +75,20 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
                 }
             });
 
-            bookmark.setOnClickListener(new View.OnClickListener() {
+            removebtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickBookMark();
+                    new AlertDialog.Builder(mContext)
+                            .setMessage("Are you sure delete this destination ?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    onClickRemove();
+                                }
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+
                 }
             });
 
@@ -101,7 +108,7 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
             mContext.startActivity(intentViewDetail);
         }
 
-        void onClickBookMark() {
+        void onClickRemove() {
 
             String currentAccessToken = SharedLocalData.getAccessToken();
             if (currentAccessToken.isEmpty()) {
@@ -117,7 +124,7 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
             Destination destination = mDataSet.get(position);
 
             int id = destination.id;
-            Call<Object> call = service.add(id, "Bearer " + currentAccessToken);
+            Call<Object> call = service.remove(id, "Bearer " + currentAccessToken);
 
             call.enqueue(new Callback<Object>() {
                 @Override
@@ -126,19 +133,19 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
                     try {
                         if (code == 200) {
 
-                            Gson gson = new Gson();
-                            JSONObject data = new JSONObject(gson.toJson(response.body()));
-                            data = data.getJSONObject("data");
-                            Toast.makeText(mContext, "Added " + destination.name + " to wishlist", Toast.LENGTH_SHORT).show();
-                            bookmark.setVisibility(View.GONE);
+                            mDataSet.remove(position);
+                            notifyDataSetChanged();
+
+                            Toast.makeText(mContext, "Remove " + destination.name + " from wishlist", Toast.LENGTH_SHORT).show();
+
                         } else {
 
                             JSONObject error = new JSONObject(response.errorBody().string());
-                            Toast.makeText(mContext, "Add failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Remove failed", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(mContext, "Add failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Remove failed", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -146,16 +153,17 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
                 @Override
                 public void onFailure(Call<Object> call, Throwable t) {
 
-                    Toast.makeText(mContext, "Add failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Remove failed", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View item = mLayoutInflater.inflate(R.layout.fragment_destination_item, viewGroup, false);
+        View item = mLayoutInflater.inflate(R.layout.fragment_wishlist_item, viewGroup, false);
         return new MyViewHolder(item);
     }
 

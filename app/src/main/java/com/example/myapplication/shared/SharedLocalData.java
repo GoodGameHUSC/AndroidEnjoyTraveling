@@ -17,4 +17,10 @@ public class SharedLocalData {
 
         editor.apply();
     }
+
+    public static String getAccessToken() {
+        final SharedPreferences loginState = context.getSharedPreferences("AUTH_STATE", context.MODE_PRIVATE);
+        String accessToken = loginState.getString("access_token", "");
+        return accessToken;
+    }
 }

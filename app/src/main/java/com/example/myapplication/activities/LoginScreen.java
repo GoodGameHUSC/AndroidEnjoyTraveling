@@ -84,7 +84,10 @@ public class LoginScreen extends AppCompatActivity implements LoginContract.View
     @Override
     public void loginSuccess() {
         Log.d("TAG", "Logged in");
+
         Toast.makeText(this, "Loggined", Toast.LENGTH_SHORT).show();
+        Intent intentHome= new Intent(this, HomeScreen.class);
+        startActivity(intentHome);
     }
 
     @Override
