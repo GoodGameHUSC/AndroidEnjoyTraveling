@@ -197,8 +197,10 @@ public class WishListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
 
-        super.onAttach(context);
         RequireLogin.require(context);
+        if(SharedLocalData.getAccessToken().isEmpty())
+            getActivity().finish();
+        super.onAttach(context);
     }
 
     @Override

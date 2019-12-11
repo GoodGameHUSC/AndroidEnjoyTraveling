@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -103,6 +104,8 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         super.onCreate(savedInstanceState);
 
     }
@@ -112,8 +115,7 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_index, container, false);
-
-        // Get view
+       // Get view
         recyclerViewDestination = view.findViewById(R.id.home_recycler_content);
 
         progressBar = view.findViewById(R.id.home_progress_bar);

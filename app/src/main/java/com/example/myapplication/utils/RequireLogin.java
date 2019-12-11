@@ -14,6 +14,7 @@ public class RequireLogin {
         if(currentAccessToken.isEmpty()){
             Intent intent =  new Intent(mContext, LoginScreen.class);
             mContext.startActivity(intent);
+
         }
     }
 }

@@ -5,20 +5,20 @@ import com.google.gson.annotations.SerializedName;
 public class User {
 
 //    @SerializedName("items")
-    private String id;
-    private String username;
-    private String email;
-    private String first_name;
-    private String last_name;
-    private String avatar;
-    private String password;
-    private String fb_id;
-    private String google_id;
-    private String phone_number;
-    private String address;
-    private String lat;
-    private String lng;
-    private String dob;
+    public String id;
+    public String username;
+    public String email;
+    public String first_name;
+    public String last_name;
+    public String avatar;
+    public String password;
+    public String fb_id;
+    public String google_id;
+    public String phone_number;
+    public String address;
+    public String lat;
+    public String lng;
+    public String dob;
 
     public User(String username, String password) {
         this.username = username;
