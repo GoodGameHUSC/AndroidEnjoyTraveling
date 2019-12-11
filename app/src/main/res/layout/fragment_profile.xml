@@ -15,8 +15,29 @@
             android:layout_height="match_parent"
             android:background="@color/whiteBackground"
             android:paddingBottom="70dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="16dp">
+            tools:layout_editor_absoluteX="108dp"
+            tools:layout_editor_absoluteY="496dp">
+
+            <Button
+                android:id="@+id/profile_btn_logout"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="72dp"
+                android:background="@drawable/border_btn"
+                android:shadowColor="#F2F2F2"
+                android:text="Logout"
+                android:textColor="#2D5CC9"
+                android:textColorHighlight="#2D5CC9"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/profile_dob"
@@ -81,24 +102,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/default_user" />
-
-            <TextView
-                android:id="@+id/profile_btn_logout"
-                android:layout_width="179dp"
-                android:layout_height="41dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="52dp"
-                android:background="#718D9F"
-                android:gravity="center"
-                android:text="Logout"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.486"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/profile_username"

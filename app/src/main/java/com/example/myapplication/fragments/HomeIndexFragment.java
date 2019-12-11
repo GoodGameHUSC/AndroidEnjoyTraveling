@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -21,6 +24,10 @@ import com.example.myapplication.contracts.AppActivity;
 import com.example.myapplication.contracts.HomeContract;
 import com.example.myapplication.models.Destination;
 import com.example.myapplication.presenter.HomePresenter;
+import com.example.myapplication.services.DestinationService;
+import com.example.myapplication.services.UserService;
+import com.example.myapplication.shared.RetrofitHelper;
+import com.example.myapplication.shared.SharedLocalData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,6 +37,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -38,7 +50,7 @@ import java.util.List;
  * Use the {@link HomeIndexFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeIndexFragment extends Fragment implements HomeContract.View {
+public class HomeIndexFragment extends Fragment implements HomeContract.View, AppActivity {
 
 
     private HomePresenter presenter = new HomePresenter();
@@ -53,6 +65,9 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View {
     List<Destination> listDestinations;
     ProgressBar progressBar;
 
+    EditText text_search;
+    ImageButton search_button;
+
     private OnFragmentInteractionListener mListener;
 
     public static HomeIndexFragment newInstance(String param1, String param2) {
@@ -63,6 +78,91 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View {
         return fragment;
     }
 
+
+    @Override
+    public void initView() {
+    }
+
+    public void initView(View v) {
+
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    public void registerListener() {
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchString = text_search.getText().toString();
+
+                if (searchString.isEmpty()) {
+                    Toast.makeText(context, "Please enter search keyword", Toast.LENGTH_SHORT).show();
+                    return;
+                } else search(searchString);
+            }
+        });
+
+        text_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard();
+                }
+            }
+        });
+    }
+
+    void search(String searchString) {
+
+        Retrofit retrofit = RetrofitHelper.create();
+
+        recyclerViewDestination.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        DestinationService service = retrofit.create(DestinationService.class);
+
+        Call<Object> call = service.search(searchString);
+
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                int code = response.code();
+                try {
+                    if (code == 200) {
+
+                        Gson gson = new Gson();
+                        JSONObject data = new JSONObject(gson.toJson(response.body()));
+                        data = data.getJSONObject("data");
+
+                        onGetDataSuccess(data);
+                    } else {
+
+                        JSONObject error = new JSONObject(response.errorBody().string());
+                        onGetDataFail(error.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    onGetDataFail(e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                onGetDataFail(t.getMessage());
+            }
+        });
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(text_search.getWindowToken(), 0);
+    }
 
     public HomeIndexFragment() {
         // Required empty public constructor
@@ -98,13 +198,15 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void onGetDataFail(String errors) {
-
+        recyclerViewDestination.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(context, "Check network and try again", Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         super.onCreate(savedInstanceState);
 
@@ -115,7 +217,7 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_index, container, false);
-       // Get view
+        // Get view
         recyclerViewDestination = view.findViewById(R.id.home_recycler_content);
 
         progressBar = view.findViewById(R.id.home_progress_bar);
@@ -125,6 +227,10 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View {
         //set adapter
         mAdapter = new DestinationAdapter(getActivity(), listDestinations);
 
+        text_search = view.findViewById(R.id.txt_search);
+        search_button = view.findViewById(R.id.btn_search);
+
+        registerListener();
 
         // Manage layout
 

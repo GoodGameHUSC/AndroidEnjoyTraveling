@@ -10,6 +10,66 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:padding="2dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="5dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintBottom_toTopOf="@+id/home_recycler_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.578"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/txt_search"
+                    android:layout_width="0dp"
+                    android:layout_height="51dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/background_transparent"
+                    android:ems="10"
+                    android:hint="Search "
+                    android:inputType="textPersonName"
+                    android:textColor="@color/textMainColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.647"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_search"
+                    android:layout_width="33dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/background_transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_action_search"
+                    android:tint="#3F3B41"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.333"
+                    app:layout_constraintStart_toEndOf="@+id/txt_search"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.785" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
         <ProgressBar
             android:id="@+id/home_progress_bar"
             style="?android:progressBarStyle"
@@ -17,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,58 +90,17 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="16dp"
             android:paddingTop="8dp"
             android:paddingBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
-        <!--<android.support.v7.widget.CardView-->
-        <!--android:id="@+id/search_view"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="4dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:padding="8dp"-->
-        <!--app:cardBackgroundColor="#FFFFFF"-->
-        <!--app:cardCornerRadius="5dp"-->
-        <!--app:cardPreventCornerOverlap="false"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/home_recycler_content"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.578"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintVertical_bias="0.0">-->
 
-        <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:visibility="invisible">-->
-
-        <!--<EditText-->
-        <!--android:id="@+id/editText2"-->
-        <!--android:layout_width="304dp"-->
-        <!--android:layout_height="34dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:ems="10"-->
-        <!--android:hint="@android:string/search_go"-->
-        <!--android:inputType="textPersonName"-->
-        <!--android:text="Name"-->
-        <!--android:textColorHint="@color/textMainColor"-->
-        <!--android:visibility="invisible"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.493"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-        <!--</android.support.constraint.ConstraintLayout>-->
-        <!--</android.support.v7.widget.CardView>-->
         <!---->
         <!---->
     </android.support.constraint.ConstraintLayout>

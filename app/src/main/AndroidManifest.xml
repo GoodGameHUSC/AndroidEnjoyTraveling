@@ -38,9 +38,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.HomeScreen"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             android:label="@string/title_activity_home_screen"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
     </application>
 
 </manifest>
