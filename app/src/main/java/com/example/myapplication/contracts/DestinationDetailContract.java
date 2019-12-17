@@ -15,6 +15,6 @@ public class DestinationDetailContract {
 
         void setView(DestinationDetailContract.View view);
 
-        void getData();
+        void getData(int id);
     }
 }
