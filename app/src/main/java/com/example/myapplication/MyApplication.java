@@ -16,36 +16,14 @@ import android.widget.Toast;
 
 import java.security.Permission;
 
-public class MyApplication extends Application implements LocationListener {
+public class MyApplication extends Application {
     private static Context context;
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
-
-//        if (ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-//
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
-//
-//        } else {
-//            // Permission has already been granted
-//        }
-//
-//        try {
-//            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-//
-//        } catch (SecurityException e) {
-//            e.printStackTrace();
-//            Toast.makeText(this, "Unable to use location", Toast.LENGTH_LONG).show();
-//        }
 
     }
 
@@ -53,25 +31,5 @@ public class MyApplication extends Application implements LocationListener {
         return context;
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
 
-        Log.d("Lat ", String.valueOf(location.getLatitude()));
-        Log.d("Long ", String.valueOf(location.getLongitude()));
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Log.d("Latitude", "disable");
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Log.d("Latitude", "enable");
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
 }

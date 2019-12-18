@@ -227,7 +227,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_marginStart="28dp"
                             android:layout_marginTop="8dp"
-                            android:text="Google Map"
+                            android:text="Direct on map"
                             android:textColor="#9D95AA"
                             android:textSize="13sp"
                             android:textStyle="bold"

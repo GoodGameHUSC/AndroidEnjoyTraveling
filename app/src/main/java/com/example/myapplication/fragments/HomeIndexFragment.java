@@ -1,6 +1,10 @@
 package com.example.myapplication.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,6 +40,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,13 +65,16 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
     int totalPage;
     int perPage;
 
+    double currentLocationLat;
+    double currentLocationLng;
+
     RecyclerView recyclerViewDestination;
     DestinationAdapter mAdapter;
     List<Destination> listDestinations;
     ProgressBar progressBar;
 
     EditText text_search;
-    ImageButton search_button;
+    ImageButton search_button, search_near_button;
 
     private OnFragmentInteractionListener mListener;
 
@@ -98,12 +106,7 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
             @Override
             public void onClick(View v) {
                 String searchString = text_search.getText().toString();
-
-//                if (searchString.isEmpty()) {
-//                    Toast.makeText(context, "Please enter search keyword", Toast.LENGTH_SHORT).show();
-//                    return;
-//                } else 
-                    search(searchString);
+                search(searchString);
             }
         });
 
@@ -116,6 +119,80 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
                 }
             }
         });
+
+        search_near_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Map<String, String> currentLocation = SharedLocalData.getCurrentLocation();
+                if (currentLocation == null)
+                    Toast.makeText(getActivity(), "Need GPS permision", Toast.LENGTH_LONG).show();
+                else {
+                    currentLocationLat = Double.parseDouble(currentLocation.get("lat"));
+                    currentLocationLng = Double.parseDouble(currentLocation.get("lng"));
+                    findLocation();
+                }
+
+            }
+        });
+    }
+
+    void findLocation() {
+        CharSequence colors[] = new CharSequence[]{"< 10 Km", "10 - 20 Km", "20 - 50 Km", "50 - 100 Km", "Remove filter"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Choose distance range");
+        builder.setItems(colors, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        filterData(0, 10000);
+                        break;
+                    case 1:
+                        filterData(10000, 20000);
+                        break;
+                    case 2:
+                        filterData(20000, 50000);
+                        break;
+                    case 3:
+                        filterData(50000, 100000);
+                        break;
+//                    case 3:
+//                        filterData(100, Long.MAX_VALUE); break;
+                    default:
+                        search_near_button.setColorFilter(Color.rgb(164, 155, 168));
+                        presenter.getData();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    void filterData(long min, long max) {
+        List<Destination> filterResult = new ArrayList<>();
+
+        Location current_location = new Location("currentLocation");
+        current_location.setLatitude(currentLocationLat);
+        current_location.setLongitude(currentLocationLng);
+
+        for (Destination destination : listDestinations) {
+
+            Location selected_location = new Location("destination");
+            selected_location.setLatitude(Double.parseDouble(destination.lat));
+            selected_location.setLongitude(Double.parseDouble(destination.lng));
+
+
+            double distance = selected_location.distanceTo(current_location);
+
+            if (distance >= min && distance <= max)
+                filterResult.add(destination);
+        }
+
+        search_near_button.setColorFilter(Color.RED);
+        listDestinations.clear();
+        listDestinations.addAll(filterResult);
+        mAdapter.notifyDataSetChanged();
     }
 
     void search(String searchString) {
@@ -230,6 +307,8 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
 
         text_search = view.findViewById(R.id.txt_search);
         search_button = view.findViewById(R.id.btn_search);
+        search_near_button = view.findViewById(R.id.btn_search_near);
+
 
         registerListener();
 

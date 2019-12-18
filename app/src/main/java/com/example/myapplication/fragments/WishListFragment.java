@@ -189,9 +189,8 @@ public class WishListFragment extends Fragment {
     }
 
     void onGetDataFail(String error) {
-        Toast.makeText(getActivity(), "Something went wrong! Please try late", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Something went wrong! Please try late", Toast.LENGTH_SHORT).show();
     }
-
 
 
     @Override

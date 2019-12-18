@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,7 +121,15 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
             @Override
             public void onClick(View v) {
 
+                Map<String, String> currentLocation = SharedLocalData.getCurrentLocation();
+
+                String currentLocationLat = currentLocation.get("lat");
+                String currentLocationLng = currentLocation.get("lng");
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", Double.parseDouble(destination.lat), Double.parseDouble(destination.lng));
+
+                if (!currentLocationLat.isEmpty() && !currentLocationLng.isEmpty())
+                    uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f",
+                            Double.parseDouble(currentLocationLat), Double.parseDouble(currentLocationLng), Double.parseDouble(destination.lat), Double.parseDouble(destination.lng));
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 instance.startActivity(intent);
             }
@@ -164,7 +173,7 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
         });
     }
 
-    void getLocation(){
+    void getLocation() {
 
     }
 
@@ -217,7 +226,7 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
 
             destination = destinations_data;
 
-            Toast.makeText(this, destination.name, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, destination.name, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(this, "Opps!", Toast.LENGTH_SHORT).show();
         }

@@ -42,18 +42,10 @@ public class AppLauncherScreen extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        Log.v("is logged in", String.valueOf(loginState.getBoolean("isLogin", false)));
-
-                        if (!loginState.getBoolean("isLogin", false)) {
-                            Intent startLogin = new Intent(instance, LoginScreen.class);
-                            startActivity(startLogin);
-                        } else {
-                            Intent startHome = new Intent(instance, HomeScreen.class);
-                            startActivity(startHome);
-                        }
+                        initApp();
                     }
                 },
-                1000);
+                800);
 
     }
 
