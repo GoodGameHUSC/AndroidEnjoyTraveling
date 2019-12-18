@@ -61,7 +61,7 @@
                             app:layout_constraintStart_toStartOf="@+id/des_detail_btn_share" />
 
                         <TextView
-                            android:id="@+id/gotoGoogleMap5"
+                            android:id="@+id/des_detail_rate"
                             android:layout_width="wrap_content"
                             android:layout_height="20dp"
                             android:layout_alignParentStart="true"

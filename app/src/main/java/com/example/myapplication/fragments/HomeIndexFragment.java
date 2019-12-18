@@ -68,6 +68,9 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
     double currentLocationLat;
     double currentLocationLng;
 
+    long max_distance = 0;
+    long min_distance = 0;
+
     RecyclerView recyclerViewDestination;
     DestinationAdapter mAdapter;
     List<Destination> listDestinations;
@@ -106,6 +109,8 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
             @Override
             public void onClick(View v) {
                 String searchString = text_search.getText().toString();
+                setDistance((long) 0, (long) 0, true);
+                search_near_button.setColorFilter(Color.rgb(164, 155, 168));
                 search(searchString);
             }
         });
@@ -138,7 +143,7 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
     }
 
     void findLocation() {
-        CharSequence colors[] = new CharSequence[]{"< 10 Km", "10 - 20 Km", "20 - 50 Km", "50 - 100 Km", "Remove filter"};
+        CharSequence colors[] = new CharSequence[]{"< 10 Km", "10 - 20 Km", "20 - 50 Km", "50 - 100 Km", "Remove Filter"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose distance range");
@@ -147,21 +152,23 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        filterData(0, 10000);
+                        setDistance((long) 0, (long) 10000, false);
+                        presenter.getData();
                         break;
                     case 1:
-                        filterData(10000, 20000);
+                        setDistance((long) 10000, (long) 20000, false);
+                        presenter.getData();
                         break;
                     case 2:
-                        filterData(20000, 50000);
+                        setDistance((long) 20000, (long) 50000, false);
+                        presenter.getData();
                         break;
                     case 3:
-                        filterData(50000, 100000);
+                        setDistance((long) 50000, (long) 100000, false);
+                        presenter.getData();
                         break;
-//                    case 3:
-//                        filterData(100, Long.MAX_VALUE); break;
-                    default:
-                        search_near_button.setColorFilter(Color.rgb(164, 155, 168));
+                    case 4:
+                        setDistance((long) 0, (long) 0, true);
                         presenter.getData();
                 }
             }
@@ -169,14 +176,23 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
         builder.show();
     }
 
-    void filterData(long min, long max) {
+    void setDistance(Long min, Long max, boolean disable) {
+        max_distance = max;
+        min_distance = min;
+        if (disable) search_near_button.setColorFilter(Color.rgb(164, 155, 168));
+        else search_near_button.setColorFilter(Color.RED);
+    }
+
+    List<Destination> filterData(List<Destination> prevData) {
         List<Destination> filterResult = new ArrayList<>();
 
         Location current_location = new Location("currentLocation");
         current_location.setLatitude(currentLocationLat);
         current_location.setLongitude(currentLocationLng);
 
-        for (Destination destination : listDestinations) {
+        if (min_distance == 0 && max_distance == 0) return prevData;
+
+        for (Destination destination : prevData) {
 
             Location selected_location = new Location("destination");
             selected_location.setLatitude(Double.parseDouble(destination.lat));
@@ -185,14 +201,10 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
 
             double distance = selected_location.distanceTo(current_location);
 
-            if (distance >= min && distance <= max)
+            if (distance >= min_distance && distance <= max_distance)
                 filterResult.add(destination);
         }
-
-        search_near_button.setColorFilter(Color.RED);
-        listDestinations.clear();
-        listDestinations.addAll(filterResult);
-        mAdapter.notifyDataSetChanged();
+        return filterResult;
     }
 
     void search(String searchString) {
@@ -249,7 +261,6 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
     @Override
     public void onGetDataSuccess(JSONObject data) {
         try {
-
             Gson gson = new Gson();
 
             currentPage = data.getInt("current_page");
@@ -260,6 +271,8 @@ public class HomeIndexFragment extends Fragment implements HomeContract.View, Ap
 
             List<Destination> destinations = gson.fromJson(listdestinationRaw.toString(), new TypeToken<List<Destination>>() {
             }.getType());
+
+            destinations = filterData(destinations);
 
             listDestinations.clear();
             listDestinations.addAll(destinations);

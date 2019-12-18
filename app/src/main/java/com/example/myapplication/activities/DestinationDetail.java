@@ -49,7 +49,7 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
     DestinationDetailPresenter presenter;
 
     TextView name, province, address, description, likeCount;
-    TextView open_time_txt;
+    TextView open_time_txt, des_detail_rate;
     ImageButton goMap, viewPhoto, like_bnt, rate_btn, share_btn;
     ImageView avatarImage;
 
@@ -66,23 +66,6 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
         registerListener();
     }
 
-    void initData() {
-        DecimalFormat dd = new DecimalFormat("##.00");
-        Intent intent = getIntent();
-        id = intent.getIntExtra("ID", 0);
-        destination = new Gson().fromJson(intent.getStringExtra("DATA"), new TypeToken<Destination>() {
-        }.getType());
-
-        Picasso.get().load(destination.image).into(avatarImage);
-        name.setText(destination.name);
-//        province.setText(destination.province.name);
-        address.setText(destination.address);
-        description.setText(destination.description);
-        likeCount.setText(destination.likes_count + " Like");
-        if (destination.open_time != 0)
-            open_time_txt.setText(dd.format(destination.open_time) + "h - " + dd.format(destination.close_time) + "h");
-        else open_time_txt.setText("All days");
-    }
 
     void updateData() {
 
@@ -102,9 +85,28 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
         goMap = findViewById(R.id.gotoGoogleMap);
         like_bnt = findViewById(R.id.des_detail_like_button);
         rate_btn = findViewById(R.id.des_detail_rate_btn);
+        des_detail_rate = findViewById(R.id.des_detail_rate);
 
         open_time_txt = findViewById(R.id.open_time);
         share_btn = findViewById(R.id.des_detail_btn_share);
+    }
+
+    void initData() {
+        DecimalFormat dd = new DecimalFormat("##.00");
+        Intent intent = getIntent();
+        id = intent.getIntExtra("ID", 0);
+        destination = new Gson().fromJson(intent.getStringExtra("DATA"), new TypeToken<Destination>() {
+        }.getType());
+
+        Picasso.get().load(destination.image).into(avatarImage);
+        name.setText(destination.name);
+        address.setText(destination.address);
+        des_detail_rate.setText(destination.avg_rate);
+        description.setText(destination.description);
+        likeCount.setText(destination.likes_count + " Like");
+        if (destination.open_time != 0)
+            open_time_txt.setText(dd.format(destination.open_time) + "h - " + dd.format(destination.close_time) + "h");
+        else open_time_txt.setText("All days");
     }
 
     @Override
@@ -149,7 +151,9 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
         like_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                like();
+                RequireLogin.require(instance);
+                if (!SharedLocalData.getAccessToken().isEmpty())
+                    like();
             }
         });
 
