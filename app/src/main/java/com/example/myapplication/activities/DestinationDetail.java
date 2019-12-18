@@ -134,20 +134,12 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
                 dialog.show();
                 Window window = dialog.getWindow();
                 window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//                String url = destination.image;
-//                if (destination.gallery != null) {
-//                    if (destination.gallery.size() > 0)
-//                        url = destination.gallery.get(0).url;
-//                }
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//                instance.startActivity(intent);
             }
         });
 
         like_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 like();
             }
         });
@@ -170,6 +162,10 @@ public class DestinationDetail extends AppCompatActivity implements AppActivity,
                 }
             }
         });
+    }
+
+    void getLocation(){
+
     }
 
     void like() {

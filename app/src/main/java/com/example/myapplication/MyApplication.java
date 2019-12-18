@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -31,8 +32,7 @@ public class MyApplication extends Application implements LocationListener {
 //
 //
 //            ActivityCompat.requestPermissions(this,
-//                    new String[]{Manifest.permission.READ_CONTACTS},
-//                    LocationServic .MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
 //
 //        } else {
 //            // Permission has already been granted
@@ -41,6 +41,7 @@ public class MyApplication extends Application implements LocationListener {
 //        try {
 //            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 //            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+//
 //        } catch (SecurityException e) {
 //            e.printStackTrace();
 //            Toast.makeText(this, "Unable to use location", Toast.LENGTH_LONG).show();
@@ -55,7 +56,8 @@ public class MyApplication extends Application implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
-
+        Log.d("Lat ", String.valueOf(location.getLatitude()));
+        Log.d("Long ", String.valueOf(location.getLongitude()));
     }
 
     @Override
